@@ -5,7 +5,7 @@ import joblib
 
 # Load the model and preprocessor
 model = joblib.load("models/churn_model.pkl")
-#preprocessor = joblib.load("models/preprocessor.pkl")
+preprocessor = joblib.load("models/preprocessor.pkl")
 
 # Load data for dropdown options
 df = pd.read_csv("data/Customer_Data.csv")
@@ -147,7 +147,7 @@ with tabs[0]:
         }])
 
         # Preprocess and predict
-        #transformed = preprocessor.transform(input_data)
+        transformed = preprocessor.transform(input_data)
         prediction = model.predict(input_data)[0]
         prob = model.predict_proba(input_data)[0][1]
 

@@ -40,6 +40,9 @@ X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
+# Fit the preprocessor on the training data
+preprocessor.fit(X_train)
+
 # Pipeline with SMOTE
 pipeline = imb_Pipeline([
     ('preprocessor', preprocessor),
