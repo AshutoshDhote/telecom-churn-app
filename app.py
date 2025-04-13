@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import joblib
+import plotly.express as px
 
 # Load the model and preprocessor
 model = joblib.load("models/churn_model.pkl")
@@ -226,6 +227,7 @@ with tabs[2]:
 with tabs[3]:
     st.header("📌 Key Metrics")
 
+    # Core metrics
     churn_rate = df[df['Customer_Status'] == 'Churned'].shape[0] / df.shape[0]
     avg_monthly = df['Monthly_Charge'].mean()
     avg_tenure = df['Tenure_in_Months'].mean()
@@ -237,6 +239,48 @@ with tabs[3]:
 
     st.subheader("🌍 Top 5 States by Churn Count")
     st.bar_chart(churn_by_state)
+
+    st.markdown("---")
+    st.subheader("👥 Gender vs Churn Breakdown")
+    gender_churn = df.groupby(['Gender', 'Customer_Status']).size().reset_index(name='Count')
+    fig_gender = px.bar(
+        gender_churn,
+        x='Gender',
+        y='Count',
+        color='Customer_Status',
+        barmode='stack',
+        title="Gender-wise Churn Distribution"
+    )
+    st.plotly_chart(fig_gender, use_container_width=True)
+
+    st.markdown("---")
+    st.subheader("🌐 Internet Service vs Churn Breakdown")
+    internet_churn = df.groupby(['Internet_Service', 'Customer_Status']).size().reset_index(name='Count')
+    fig_internet = px.bar(
+        internet_churn,
+        x='Internet_Service',
+        y='Count',
+        color='Customer_Status',
+        barmode='stack',
+        title="Internet Service-wise Churn Distribution"
+    )
+    st.plotly_chart(fig_internet, use_container_width=True)
+
+    st.markdown("---")
+    st.subheader("📊 Age Group Distribution")
+    df['Age_Group'] = pd.cut(df['Age'], bins=[0, 25, 35, 45, 55, 65, 100],
+                             labels=["<25", "25–35", "35–45", "45–55", "55–65", "65+"])
+    age_group_churn = df.groupby(['Age_Group', 'Customer_Status']).size().reset_index(name='Count')
+    fig_age = px.bar(
+        age_group_churn,
+        x='Age_Group',
+        y='Count',
+        color='Customer_Status',
+        barmode='stack',
+        title="Age Group vs Churn"
+    )
+    st.plotly_chart(fig_age, use_container_width=True)
+
 
 # ----------------------------- TAB 5: SAMPLE INPUTS -----------------------------
 with tabs[4]:
