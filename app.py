@@ -194,17 +194,21 @@ with tabs[1]:
     df_extreme = df.copy()
     df_extreme['Churn_Probability'] = churn_probs
 
-    # Get top churner and top stayer
-    most_likely_to_churn = df_extreme.sort_values('Churn_Probability', ascending=False).iloc[0]
-    most_likely_to_stay = df_extreme.sort_values('Churn_Probability').iloc[0]
+    # Get top 3 churners and top 3 stayers
+    top_3_churners = df_extreme.sort_values('Churn_Probability', ascending=False).head(3)
+    top_3_stayers = df_extreme.sort_values('Churn_Probability').head(3)
 
-    st.subheader("🚨 Customer Most Likely to Churn")
-    st.dataframe(most_likely_to_churn.to_frame().T, use_container_width=True)
-    st.markdown(f"**Confidence (to churn): {most_likely_to_churn['Churn_Probability']:.2%}**")
+    st.subheader("🚨 Top 3 Customers Most Likely to Churn")
+    st.dataframe(top_3_churners, use_container_width=True)
+    for _, row in top_3_churners.iterrows():
+        customer_id = row['Customer_ID']  # Replace with the correct column name if it's different
+        st.markdown(f"**Customer ID: {customer_id} - Confidence (to churn): {row['Churn_Probability']:.2%}**")
 
-    st.subheader("💚 Customer Most Likely to Stay")
-    st.dataframe(most_likely_to_stay.to_frame().T, use_container_width=True)
-    st.markdown(f"**Confidence (to stay): {1 - most_likely_to_stay['Churn_Probability']:.2%}**")
+    st.subheader("💚 Top 3 Customers Most Likely to Stay")
+    st.dataframe(top_3_stayers, use_container_width=True)
+    for _, row in top_3_stayers.iterrows():
+        customer_id = row['Customer_ID']  # Replace with the correct column name if it's different
+        st.markdown(f"**Customer ID: {customer_id} - Confidence (to stay): {1 - row['Churn_Probability']:.2%}**")
 
 # ----------------------------- TAB 3: POWER BI REPORT -----------------------------
 with tabs[2]:
