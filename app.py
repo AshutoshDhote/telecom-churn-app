@@ -53,69 +53,98 @@ tabs = st.tabs(["🧠 **Predict Churn**", "⚖️ Most Likely to Churn/Stay", "�
 # ----------------------------- TAB 1: PREDICT CHURN -----------------------------
 with tabs[0]:
     st.header("🧠 Predict Customer Churn")
-    with st.form("churn_form"):
-        st.subheader("🧍 Customer Info")
-        col1, col2, col3 = st.columns(3)
 
-        with col1:
-            gender = st.selectbox("Gender", sorted(df['Gender'].dropna().unique()))
-            married = st.selectbox("Married", sorted(df['Married'].dropna().unique()))
-            state = st.selectbox("State", sorted(df['State'].dropna().unique()))
-        with col2:
-            age = st.slider("Age", int(df['Age'].min()), int(df['Age'].max()), int(df['Age'].median()))
-            number_of_referrals = st.slider("Number of Referrals", 
-                                            int(df['Number_of_Referrals'].min()), 
-                                            int(df['Number_of_Referrals'].max()), 
-                                            int(df['Number_of_Referrals'].median()))
-            tenure_in_months = st.slider("Tenure (Months)", 
-                                        int(df['Tenure_in_Months'].min()), 
-                                        int(df['Tenure_in_Months'].max()), 
-                                        int(df['Tenure_in_Months'].median()))
+    # ----------------------------- Customer Info Section -----------------------------
+    st.markdown("---")
+    st.markdown("### 🧍 Customer Info")
+    col1, col2 = st.columns(2)
 
-        st.subheader("🛠️ Service Add-Ons")
-        col4, col5, col6 = st.columns(3)
+    with col1:
+        gender = st.selectbox("Gender", sorted(df['Gender'].dropna().unique()))
+        married = st.selectbox("Married", sorted(df['Married'].dropna().unique()))
+        state = st.selectbox("State", sorted(df['State'].dropna().unique()))
+    with col2:
+        age = st.slider("Age", int(df['Age'].min()), int(df['Age'].max()), int(df['Age'].median()))
+        number_of_referrals = st.slider("Number of Referrals", 
+                                        int(df['Number_of_Referrals'].min()), 
+                                        int(df['Number_of_Referrals'].max()), 
+                                        int(df['Number_of_Referrals'].median()))
+        tenure_in_months = st.slider("Tenure (Months)", 
+                                    int(df['Tenure_in_Months'].min()), 
+                                    int(df['Tenure_in_Months'].max()), 
+                                    int(df['Tenure_in_Months'].median()))
 
-        with col4:
-            phone_service = st.selectbox("Phone Service", sorted(df['Phone_Service'].dropna().unique()))
-            multiple_lines = st.selectbox("Multiple Lines", sorted(df['Multiple_Lines'].dropna().unique()))
-            internet_service = st.selectbox("Internet Service", sorted(df['Internet_Service'].dropna().unique()))
+    # -------------------------- Service & Internet Logic  --------------------------
+    st.markdown("---")
+    st.markdown("### 🛠️ Service Add-Ons")
 
-        with col5:
-            internet_type = st.selectbox("Internet Type", sorted(df['Internet_Type'].dropna().unique()))
+    # Service add-ons options (Phone Service, Multiple Lines)
+    col3, col4 = st.columns(2)
+    with col3:
+        #Internet Service Header
+        st.subheader("Internet Service")
+
+        #Choose if the customer has Internet Service
+        internet_service = st.selectbox("Choose if the customer has Internet Service", ["Yes", "No"])
+        
+        # Initialize variables with empty string as default values
+        online_security = ""
+        online_backup = ""
+        internet_type = ""
+        premium_support = ""
+        device_protection_plan = ""
+
+        # Show related service options only if Internet Service is "Yes"
+        if internet_service == "Yes":
             online_security = st.selectbox("Online Security", sorted(df['Online_Security'].dropna().unique()))
             online_backup = st.selectbox("Online Backup", sorted(df['Online_Backup'].dropna().unique()))
-
-        with col6:
-            device_protection_plan = st.selectbox("Device Protection Plan", sorted(df['Device_Protection_Plan'].dropna().unique()))
+            internet_type = st.selectbox("Internet Type", sorted(df['Internet_Type'].dropna().unique()))
             premium_support = st.selectbox("Premium Support", sorted(df['Premium_Support'].dropna().unique()))
+            device_protection_plan = st.selectbox("Device Protection Plan", sorted(df['Device_Protection_Plan'].dropna().unique()))
+        
+        # Don't show related service options as Internet Service is "No"
+        else:
+            # Grey out the fields by using `disabled=True`
+            online_security = st.selectbox("Online Security", sorted(df['Online_Security'].dropna().unique()), disabled=True)
+            online_backup = st.selectbox("Online Backup", sorted(df['Online_Backup'].dropna().unique()), disabled=True)
+            internet_type = st.selectbox("Internet Type", ["N/A"], disabled=True)
+            premium_support = st.selectbox("Premium Support", sorted(df['Premium_Support'].dropna().unique()), disabled=True)
+            device_protection_plan = st.selectbox("Device Protection Plan", sorted(df['Device_Protection_Plan'].dropna().unique()), disabled=True)
 
-        st.subheader("💳 Billing Info")
-        col7, col8, col9 = st.columns(3)
+    #Phone Service Header
+    with col4:
+        st.subheader("Phone Service")
+        phone_service = st.selectbox("Phone Service", sorted(df['Phone_Service'].dropna().unique()))
+        multiple_lines = st.selectbox("Multiple Lines", sorted(df['Multiple_Lines'].dropna().unique()))
 
-        with col7:
-            contract = st.selectbox("Contract", sorted(df['Contract'].dropna().unique()))
-            paperless_billing = st.selectbox("Paperless Billing", sorted(df['Paperless_Billing'].dropna().unique()))
-            payment_method = st.selectbox("Payment Method", sorted(df['Payment_Method'].dropna().unique()))
+    # ----------------------------- Billing Info Section -----------------------------
+    st.markdown("---")
+    st.markdown("### 💳 Billing Info")
+    col5, col6 = st.columns(2)
 
-        with col8:
-            monthly_charge = st.number_input("Monthly Charge (INR)", 
-                                            min_value=float(df['Monthly_Charge'].min()), 
-                                            max_value=float(df['Monthly_Charge'].max()), 
-                                            value=float(df['Monthly_Charge'].median()))
+    with col5:
+        contract = st.selectbox("Contract", sorted(df['Contract'].dropna().unique()))
+        paperless_billing = st.selectbox("Paperless Billing", sorted(df['Paperless_Billing'].dropna().unique()))
+        payment_method = st.selectbox("Payment Method", sorted(df['Payment_Method'].dropna().unique()))
+        monthly_charge = st.number_input("Monthly Charge (INR)", 
+                                        min_value=float(df['Monthly_Charge'].min()), 
+                                        max_value=float(df['Monthly_Charge'].max()), 
+                                        value=float(df['Monthly_Charge'].median()))
 
-            total_charges = st.number_input("Total Charges (INR)", 
-                                            min_value=float(df['Total_Charges'].min()), 
-                                            max_value=float(df['Total_Charges'].max()), 
-                                            value=float(df['Total_Charges'].median()))
-        with col9:
-            total_extra_data_charges = st.number_input("Total Extra Data Charges", min_value=0.0, value=0.0)
-            total_refunds = st.number_input("Total Refunds", min_value=0.0, value=0.0)
-            total_long_distance_charges = st.number_input("Total Long Distance Charges", min_value=0.0, value=0.0)
-            unlimited_data = st.selectbox("Unlimited Data", ['Yes', 'No'])
-            total_revenue = st.number_input("Total Revenue", min_value=0.0, value=700.0)
+        total_charges = st.number_input("Total Charges (INR)", 
+                                        min_value=float(df['Total_Charges'].min()), 
+                                        max_value=float(df['Total_Charges'].max()), 
+                                        value=float(df['Total_Charges'].median()))
+    with col6:
+        total_extra_data_charges = st.number_input("Total Extra Data Charges", min_value=0.0, value=0.0)
+        total_refunds = st.number_input("Total Refunds", min_value=0.0, value=0.0)
+        total_long_distance_charges = st.number_input("Total Long Distance Charges", min_value=0.0, value=0.0)
+        unlimited_data = st.selectbox("Unlimited Data", ['Yes', 'No'])
+        total_revenue = st.number_input("Total Revenue", min_value=0.0, value=700.0)
 
-
-        submit = st.form_submit_button("🔍 Predict Churn")
+    # ----------------------------- Submit Button -----------------------------
+    st.markdown("<br>", unsafe_allow_html=True) 
+    submit = st.button("🔍 Predict Churn")
 
     # On submit
     if submit:
