@@ -22,7 +22,7 @@ This is an interactive Streamlit web app that allows users to:
 ## 🔧 Installation
 
 1. Clone the repository:
-'''
+
 git clone https://github.com/your-username/telecom-churn-app.git
 cd telecom-churn-app
 
@@ -36,8 +36,9 @@ streamlit run app.py
 
 ##🏃 Running the App
 streamlit run app.py
-'''
+
 ---
+
 <pre> ``` 
 ## 📁 Project Structure
 telecom-churn-app/
@@ -49,6 +50,7 @@ telecom-churn-app/
 ├── requirements.txt            # Dependencies
 └── README.md                   # Project documentation
 </pre>``` 
+
 ---
 
 ##Here's a breakdown of the columns in CSV dataset:
