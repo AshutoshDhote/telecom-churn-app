@@ -23,23 +23,23 @@ This is an interactive Streamlit web app that allows users to:
 
 1. Clone the repository:
 
-git clone https://github.com/your-username/telecom-churn-app.git
-cd telecom-churn-app
+  - git clone https://github.com/your-username/telecom-churn-app.git
+  - cd telecom-churn-app
 
-3. Install Dependencies
+2. Install Dependencies
 
-python -m venv venv
-source venv/bin/activate    # On Windows: venv\Scripts\activate
-pip install -r requirements.txt
+  - python -m venv venv
+  - source venv/bin/activate    # On Windows: venv\Scripts\activate
+  - pip install -r requirements.txt
 
 streamlit run app.py
 
 ##🏃 Running the App
-streamlit run app.py
+  - streamlit run app.py
 
 ---
 
-<pre> ``` 
+<pre>
 ## 📁 Project Structure
 telecom-churn-app/
 ├── app.py                      # Streamlit app
@@ -49,15 +49,14 @@ telecom-churn-app/
 │   └── Customer_Data.csv       # Input dataset for form options
 ├── requirements.txt            # Dependencies
 └── README.md                   # Project documentation
-</pre>``` 
+</pre>
 
 ---
 
-##Here's a breakdown of the columns in CSV dataset:
+## Here's a breakdown of the columns in CSV dataset:
 
-Customer_ID: Unique identifier for each customer.
-
-Gender: Gender of the customer (e.g., "Male", "Female").
+  - Customer_ID: Unique identifier for each customer.
+  - Gender: Gender of the customer (e.g., "Male", "Female").
 
 Age: The age of the customer.
 
