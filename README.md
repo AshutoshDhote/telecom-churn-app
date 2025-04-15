@@ -22,10 +22,11 @@ This is an interactive Streamlit web app that allows users to:
 ## 🔧 Installation
 
 1. Clone the repository:
+'''
 git clone https://github.com/your-username/telecom-churn-app.git
 cd telecom-churn-app
 
-2. Install Dependencies
+3. Install Dependencies
 
 python -m venv venv
 source venv/bin/activate    # On Windows: venv\Scripts\activate
@@ -35,9 +36,9 @@ streamlit run app.py
 
 ##🏃 Running the App
 streamlit run app.py
-
+'''
 ---
-
+<pre> ``` 
 ## 📁 Project Structure
 telecom-churn-app/
 ├── app.py                      # Streamlit app
@@ -47,7 +48,7 @@ telecom-churn-app/
 │   └── Customer_Data.csv       # Input dataset for form options
 ├── requirements.txt            # Dependencies
 └── README.md                   # Project documentation
-
+</pre>``` 
 ---
 
 ##Here's a breakdown of the columns in CSV dataset:
