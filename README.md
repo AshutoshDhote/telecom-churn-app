@@ -22,8 +22,6 @@ This is an interactive Streamlit web app that allows users to:
 ## 🔧 Installation
 
 1. Clone the repository:
-
-```bash
 git clone https://github.com/your-username/telecom-churn-app.git
 cd telecom-churn-app
 
@@ -38,6 +36,7 @@ streamlit run app.py
 ##🏃 Running the App
 streamlit run app.py
 
+---
 
 ## 📁 Project Structure
 telecom-churn-app/
@@ -48,6 +47,8 @@ telecom-churn-app/
 │   └── Customer_Data.csv       # Input dataset for form options
 ├── requirements.txt            # Dependencies
 └── README.md                   # Project documentation
+
+---
 
 ##Here's a breakdown of the columns in CSV dataset:
 
